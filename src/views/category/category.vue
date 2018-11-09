@@ -439,7 +439,7 @@
             <div class="add-cart">
               <p class="quantity cart-plus-minus">
                 <label>数量：</label>
-                <input type="text" value="1" v-modal="proDetailNum" />
+                <input type="text" value="1" v-model="proDetailNum" />
               </p>
               <div class="collect">
                 <label>收藏：</label>
@@ -502,7 +502,7 @@
       allPrice:0,
       constantMsg:this.GLOBAL.list.constantMsg,
       shopCart:[],
-      proDetailNum:0,
+      proDetailNum:1,
       proDetail:this.GLOBAL.list.men[0],
       selectImgUrl:'',
             dialogProDetailVisible:false, // 商品详情窗口
@@ -533,6 +533,14 @@
         let index = null // 判断商品存在于购物车中的商品角标
         if(this.shopCart.length == 0){
           if(type == 'proDetail'){
+            if(this.proDetailNum == 0){
+            Message({
+              message: '请输入商品数量',
+              type: 'warning',
+              duration: 2000
+            })
+            return
+          }
             item.num = this.proDetailNum
           }else{
             item.num = 1
@@ -543,6 +551,7 @@
             type: 'success',
             duration: 2000
           })
+          this.onGetAllPrice()
           console.log(this.shopCart)
           return
         }
